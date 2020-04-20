@@ -25,6 +25,7 @@
       .then(blob => blob.json())
       .then(data => cities.push(...data));
 
+    // 比對的function
     function findMatches(wordToMatch, cities) {
       return cities.filter(place => {
         const regex = new RegExp(wordToMatch, 'gi');
@@ -32,27 +33,28 @@
       });
     }
 
+    // 先用querySelector定義兩個html元素
     const searchInput = document.querySelector('.search');
     const suggestions = document.querySelector('.suggestions');
+
+    // 增加監聽
     searchInput.addEventListener('keyup', displayMatches);
 
     function numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
 
-
+    // 監聽觸發的function
     function displayMatches() {
 
+      // 呼叫比對function後得到應顯示的Array
       const matchArray = findMatches(this.value, cities);
 
+      // 根據監聽得到的值去比對需要hightlight的文字
       const html = matchArray.map(place => {
-
         const regex = new RegExp(this.value, 'gi');
-
         const cityName = place.city.replace(regex, `<span class="hl">${this.value}</span>`);
         const stateName = place.state.replace(regex, `<span class="hl">${this.value}</span>`);
-
-
         return `
         <li>
         <span class="name">${cityName}, ${stateName}</span>
@@ -60,7 +62,6 @@
         </li>
         `;
       }).join('');
-
       suggestions.innerHTML = html;
     }
   </script>
