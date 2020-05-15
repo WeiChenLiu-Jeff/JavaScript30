@@ -24,7 +24,7 @@
     fetch(endpoint)
       .then(blob => blob.json())
       .then(data => cities.push(...data));
-
+    console.log(cities);
     // 比對的function
     function findMatches(wordToMatch, cities) {
       return cities.filter(place => {
